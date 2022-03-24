@@ -84,12 +84,12 @@
 
     async function onButtonClick(event) {
         event.preventDefault();
-        console.log(event)
+        let rest = event.target.id
         let data = {
             'a': document.getElementById('a').value,
             'b': document.getElementById('b').value
         }
-        let url = 'http://127.0.0.1:8000/api/add/'
+        let url = `http://127.0.0.1:8000/api/${rest}/`
 
         try {
             let response = await makeRequest(url, data);
@@ -101,13 +101,14 @@
     }
 
     function onWindowLoad() {
-        const csrftoken = getCookie('csrftoken');
         const addButton = document.getElementById('add');
         const subtractButton = document.getElementById('subtract');
         const multiplyButton = document.getElementById('multiply');
         const divideButton = document.getElementById('divide');
         addButton.onclick = onButtonClick;
-        subtractButton.onclick = onButtonClick()
+        subtractButton.onclick = onButtonClick
+        multiplyButton.onclick = onButtonClick
+        divideButton.onclick = onButtonClick
     }
 
     window.addEventListener('load', onWindowLoad)
