@@ -6,9 +6,8 @@ from django.http import JsonResponse, HttpResponseNotAllowed
 
 def add_view(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        a = int(data['a'])
-        b = int(data['b'])
+        a, b = json.loads(request.body).values()
+        a, b = int(a), int(b)
         value = a + b
         return JsonResponse(
             {
@@ -22,9 +21,8 @@ def add_view(request):
 
 def subtract_view(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        a = int(data['a'])
-        b = int(data['b'])
+        a, b = json.loads(request.body).values()
+        a, b = int(a), int(b)
         value = a - b
         return JsonResponse(
             {
@@ -38,9 +36,8 @@ def subtract_view(request):
 
 def multiply_view(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        a = int(data['a'])
-        b = int(data['b'])
+        a, b = json.loads(request.body).values()
+        a, b = int(a), int(b)
         value = a * b
         return JsonResponse(
             {
@@ -54,9 +51,8 @@ def multiply_view(request):
 
 def divide_view(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        a = int(data['a'])
-        b = int(data['b'])
+        a, b = json.loads(request.body).values()
+        a, b = int(a), int(b)
         try:
             value = a / b
             return JsonResponse(
@@ -66,9 +62,10 @@ def divide_view(request):
                 status=HTTPStatus.OK
             )
         except ZeroDivisionError as e:
+            value = str(e)
             return JsonResponse(
                 {
-                    "value": error,
+                    "value": value,
                 },
                 status=HTTPStatus.BAD_REQUEST
             )
